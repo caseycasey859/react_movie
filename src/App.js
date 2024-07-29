@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+// 1.로딩페이지
 import './App.css';
+import {useState, useEffect} from 'react';
 
 function App() {
+  //상태변수를 설정
+  const [isLoding, setIsLoading] = useState(true);
+  const [loadCounter, setLoadCounter] = usetState(0);
+  function IncreaseCounter(){
+    let _counter = loadCounter;
+    _counter = _counter + 1;
+    // 카운터값이 10이상이면 Lodding종료, 타이머 종료
+  if(_counter >10){
+    setIsLoading(false);
+    clearInterval(loadTimer);
+  }
+    setLoadCounter( 
+      _counter    
+    );
+  }
+  //타이머로 loadcounter 값을 1씩 증가
+  useEffect(
+      ()=>{
+        const loadTimer = setInterval(
+          IncreaseCounter, 1000
+
+        );
+        return ()=>{clearInterval(loadTimer); }
+
+      },[loadCounter]
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+       {isLoading? `loading... ${loadCounter}`:'Loaded'}
     </div>
   );
 }
